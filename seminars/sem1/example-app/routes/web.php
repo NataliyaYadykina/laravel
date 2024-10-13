@@ -10,6 +10,7 @@ use App\Http\Controllers\SimpleController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestRedirectController;
 use App\Http\Controllers\UserController;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,3 +45,11 @@ Route::get('/send_file', SendFileController::class);
 // hw_2
 Route::get('/userform', [FormProcessorController::class, 'index'])->name('userform');
 Route::post('/store_form', [FormProcessorController::class, 'store'])->name('store_userform');
+
+// hw_3
+Route::get('/test_database', function () {
+    $employee = new Employee();
+    $employee->first_name = 'Betman';
+    $employee->age = 34;
+    $employee->save();
+});
