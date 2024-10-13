@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FormProcessorController;
 use App\Http\Controllers\LibraryUserController;
 use App\Http\Controllers\MyUserController;
 use App\Http\Controllers\SendFileController;
@@ -39,3 +40,7 @@ Route::get('/my_user', [MyUserController::class, 'showMyUser']);
 Route::get('/redirect_test', TestRedirectController::class);
 
 Route::get('/send_file', SendFileController::class);
+
+// hw_2
+Route::get('/userform', [FormProcessorController::class, 'index'])->name('userform');
+Route::post('/store_form', [FormProcessorController::class, 'store'])->name('store_userform');
