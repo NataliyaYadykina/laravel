@@ -53,3 +53,22 @@ Route::get('/test_database', function () {
     $employee->age = 34;
     $employee->save();
 });
+
+// sem 4
+Route::get('/main', function () {
+    return view('mainpage');
+});
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/users_sem4', function () {
+    $users_sem4 = ['Ivan', 'Petr', 'Oleg', 'Alex', 'Maksim'];
+
+    return view('users_sem4', ['users' => $users_sem4]);
+});
+
+Route::get('/uppercase', function () {
+    return view('testdir');
+});
