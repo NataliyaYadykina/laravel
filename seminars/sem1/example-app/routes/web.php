@@ -72,3 +72,12 @@ Route::get('/users_sem4', function () {
 Route::get('/uppercase', function () {
     return view('testdir');
 });
+
+// hw_4
+Route::get('/home', function () {
+    return view('home', ['name' => 'John', 'age' => 14, 'position' => 'manager', 'address' => 'Moscow']);
+});
+
+Route::get('/contacts', function () {
+    return view('contacts', ['address' => 'Moscow', 'post_code' => '111333', 'email' => 'mail@gmail.com', 'phone' => '+1234567890']);
+});
