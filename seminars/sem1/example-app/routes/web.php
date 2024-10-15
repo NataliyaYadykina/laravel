@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmployeeHw5Controller;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FileUploadS5Controller;
@@ -98,3 +99,8 @@ Route::get('/upload_file_s5', [FileUploadS5Controller::class, 'showForm'])->name
 Route::post('/upload_file_s5', [FileUploadS5Controller::class, 'fileUpload'])->name('uploadFileS5');
 
 Route::post('/json_parse', [JsonParseController::class, 'parseJson']);
+
+// hw_5
+Route::get('/get_employee_data_hw5', [EmployeeHw5Controller::class, 'index']);
+Route::post('/get_employee_data_hw5', [EmployeeHw5Controller::class, 'store'])->name('store_form_hw5');
+Route::put('/user_hw5/{id}', [EmployeeHw5Controller::class, 'update']);
