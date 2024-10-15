@@ -2,12 +2,17 @@
 
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FileUploadS5Controller;
 use App\Http\Controllers\FormProcessorController;
+use App\Http\Controllers\JsonParseController;
 use App\Http\Controllers\LibraryUserController;
 use App\Http\Controllers\MyUserController;
+use App\Http\Controllers\RequestTestController;
 use App\Http\Controllers\SendFileController;
 use App\Http\Controllers\SimpleController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TestCookieController;
+use App\Http\Controllers\TestHeaderController;
 use App\Http\Controllers\TestRedirectController;
 use App\Http\Controllers\UserController;
 use App\Models\Employee;
@@ -81,3 +86,15 @@ Route::get('/home', function () {
 Route::get('/contacts', function () {
     return view('contacts', ['address' => 'Moscow', 'post_code' => '111333', 'email' => 'mail@gmail.com', 'phone' => '+1234567890']);
 });
+
+// sem_5
+Route::get('/test_parameters', [RequestTestController::class, 'testRequest']);
+
+Route::get('/test_header', [TestHeaderController::class, 'getHeader']);
+
+Route::get('/test_cookie', [TestCookieController::class, 'testCookie']);
+
+Route::get('/upload_file_s5', [FileUploadS5Controller::class, 'showForm'])->name('showFormS5');
+Route::post('/upload_file_s5', [FileUploadS5Controller::class, 'fileUpload'])->name('uploadFileS5');
+
+Route::post('/json_parse', [JsonParseController::class, 'parseJson']);
