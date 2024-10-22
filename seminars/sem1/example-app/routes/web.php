@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\EmployeeHw5Controller;
+use App\Http\Controllers\EmployeeS6_2Controller;
 use App\Http\Controllers\EntityController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FileUploadS5Controller;
+use App\Http\Controllers\FormBuilderTestS6_5Controller;
 use App\Http\Controllers\FormProcessorController;
 use App\Http\Controllers\JsonParseController;
 use App\Http\Controllers\LibraryUserController;
@@ -13,8 +15,11 @@ use App\Http\Controllers\SendFileController;
 use App\Http\Controllers\SimpleController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestCookieController;
+use App\Http\Controllers\TestCsrfS6_2Controller;
+use App\Http\Controllers\TestFormS6Controller;
 use App\Http\Controllers\TestHeaderController;
 use App\Http\Controllers\TestRedirectController;
+use App\Http\Controllers\TestValidationS6_4Controller;
 use App\Http\Controllers\UserController;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Route;
@@ -104,3 +109,19 @@ Route::post('/json_parse', [JsonParseController::class, 'parseJson']);
 Route::get('/get_employee_data_hw5', [EmployeeHw5Controller::class, 'index']);
 Route::post('/get_employee_data_hw5', [EmployeeHw5Controller::class, 'store'])->name('store_form_hw5');
 Route::put('/user_hw5/{id}', [EmployeeHw5Controller::class, 'update']);
+
+// sem_6
+Route::get('/form_s6', [TestFormS6Controller::class, 'displayForm'])->name('show_form_s6');
+Route::post('/form_s6', [TestFormS6Controller::class, 'postForm'])->name('post_form_s6');
+
+Route::post('/employee_s6_2', [EmployeeS6_2Controller::class, 'store'])->name('store_employee_s6_2');
+Route::get('/employee_s6_2/{id?}', [EmployeeS6_2Controller::class, 'show'])->name('show_employees_s6_2');
+
+Route::get('/test_csrf_s6_3', [TestCsrfS6_2Controller::class, 'show'])->name('test_csrf_s6_3');
+Route::post('/test_csrf_s6_3', [TestCsrfS6_2Controller::class, 'post'])->name('post_csrf_s6_3');
+
+Route::get('/test_validation_s6_4', [TestValidationS6_4Controller::class, 'show'])->name('show_validation_form_s6_4');
+Route::post('/test_validation_s6_4', [TestValidationS6_4Controller::class, 'post'])->name('post_validate_form_s6_4');
+
+Route::get('/test_builder_s6_5', [FormBuilderTestS6_5Controller::class, 'showForm'])->name('show_builder_s6_5');
+Route::post('/test_builder_s6_5', [FormBuilderTestS6_5Controller::class, 'postForm'])->name('post_builder_s6_5');
