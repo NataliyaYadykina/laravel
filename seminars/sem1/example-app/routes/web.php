@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookHw6Controller;
 use App\Http\Controllers\EmployeeHw5Controller;
 use App\Http\Controllers\EmployeeS6_2Controller;
 use App\Http\Controllers\EntityController;
@@ -125,3 +126,7 @@ Route::post('/test_validation_s6_4', [TestValidationS6_4Controller::class, 'post
 
 Route::get('/test_builder_s6_5', [FormBuilderTestS6_5Controller::class, 'showForm'])->name('show_builder_s6_5');
 Route::post('/test_builder_s6_5', [FormBuilderTestS6_5Controller::class, 'postForm'])->name('post_builder_s6_5');
+
+// hw_6
+Route::get('/books_hw6', [BookHw6Controller::class, 'index'])->name('show_book_hw6');
+Route::post('/books_hw6', [BookHw6Controller::class, 'store'])->name('store_book_hw6');
