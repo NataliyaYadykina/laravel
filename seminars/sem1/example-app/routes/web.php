@@ -11,6 +11,7 @@ use App\Http\Controllers\FormProcessorController;
 use App\Http\Controllers\JsonParseController;
 use App\Http\Controllers\LibraryUserController;
 use App\Http\Controllers\MyUserController;
+use App\Http\Controllers\PdfGeneratorHW7Controller;
 use App\Http\Controllers\RequestTestController;
 use App\Http\Controllers\SendFileController;
 use App\Http\Controllers\SimpleController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\TestHeaderController;
 use App\Http\Controllers\TestRedirectController;
 use App\Http\Controllers\TestValidationS6_4Controller;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserS7Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -235,3 +237,9 @@ Route::get('/file_show_s7', function () {
     // Файл будет показан в браузере
     return response()->file(base_path() . '/test_s7.txt');
 });
+
+// hw_7
+Route::get('/user_hw7', [UserS7Controller::class, 'index'])->name('show_user_hw7');
+Route::post('/user_hw7', [UserS7Controller::class, 'store'])->name('store_user_hw7');
+Route::get('/user_hw7/{id}', [UserS7Controller::class, 'get'])->name('show_user_by_id_hw7');
+Route::get('/resume_hw7/{id}', [PdfGeneratorHW7Controller::class, 'index'])->name('resume_hw7');
