@@ -23,11 +23,13 @@ use App\Http\Controllers\TestRedirectController;
 use App\Http\Controllers\TestValidationS6_4Controller;
 use App\Http\Controllers\UserController;
 use App\Models\Employee;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/test', TestController::class);
 
@@ -130,3 +132,106 @@ Route::post('/test_builder_s6_5', [FormBuilderTestS6_5Controller::class, 'postFo
 // hw_6
 Route::get('/books_hw6', [BookHw6Controller::class, 'index'])->name('show_book_hw6');
 Route::post('/books_hw6', [BookHw6Controller::class, 'store'])->name('store_book_hw6');
+
+
+// sem_7
+Route::get('/test_url_s7_1_ex01', function () {
+    return "Test";
+});
+
+Route::get('test_url_s7_1_ex02', function () {
+    // Страница доступна
+    // $response = new Response('Test content', 200);
+    // Доступ к странице запрещен
+    // $response = new Response(null, 403);
+    // return $response;
+
+    return response('New test URL', 200)
+        ->header('X-HEADER-1', 'test')
+        ->header('Content-Type', 'application/json');
+});
+
+Route::get('test_url_s7_1_ex03', function () {
+    // return redirect()->route('home');
+    return redirect(null, 301)->away('https://google.com');
+});
+
+Route::get('/test_cookie_s7', function () {
+    return response('My first cookie')
+        ->cookie('my_test_cookie', 'test content', -1)
+        // ->header('Set-Cookie', 'my_test_cookie2=10')
+        // ->header('X-HEADER-TEST1', 'IT WORKS!1')
+        // ->header('X-HEADER-TEST2', 'IT WORKS!2')
+        // ->header('X-HEADER-TEST3', 'IT WORKS!3')
+        ->withHeaders([
+            'X-HEADER-TEST4' => 'IT WORKS!4',
+            'X-HEADER-TEST5' => 'IT WORKS!5',
+            'X-HEADER-TEST6' => 'IT WORKS!6'
+        ])
+        ->withoutCookie('my_test_cookie2');
+});
+
+Route::get('/counter_s7', function () {
+    $counter = session('counter', 0);
+    session(['counter' => ++$counter]);
+
+    return 'ok';
+});
+
+Route::get('/result_counter_s7', function () {
+    return session('counter', 0);
+});
+
+Route::get('/sessions_s7', function () {
+    var_dump(session()->all());
+    if (session()->has('counter')) {
+        session()->forget('counter');
+    }
+    var_dump(session()->all());
+});
+
+Route::get('/list_of_books_s7', function () {
+    $listOfBooks = session()->get('list_of_books', '');
+
+    return response()->json(['status' => 'received', 'list_of_books' => $listOfBooks ? unserialize($listOfBooks) : 'The list is empty.']);
+});
+
+Route::post('/list_of_books_s7', function (Request $request) {
+    $listOfBooks = session()->get('list_of_books', '');
+    $listOfBooks = $listOfBooks ? unserialize($listOfBooks) : [];
+    $listOfBooks[] = [
+        'title' => $request->get('title'),
+        'author' => $request->get('author')
+    ];
+
+    session()->put('list_of_books', serialize($listOfBooks));
+
+    return response()->json(['status' => 'saved', 'list_of_books' => $listOfBooks]);
+});
+
+Route::delete('/list_of_books_s7/{id}', function ($id) {
+    $listOfBooks = session()->get('list_of_books', '');
+    $listOfBooks = $listOfBooks ? unserialize($listOfBooks) : [];
+
+    if (array_key_exists($id, $listOfBooks)) {
+        unset($listOfBooks[$id]);
+    }
+
+    session()->put('list_of_books', serialize($listOfBooks));
+
+    return response()->json(['status' => 'deleted', 'list_of_books' => $listOfBooks]);
+});
+
+Route::get('/file_download_s7', function () {
+    // Скачивание файла по ссылке
+    // return response()->download(base_path() . '/test_s7.txt', 'My_file');
+    // Потоковая загрузка
+    return response()->streamDownload(function () {
+        echo file_get_contents('https://google.com');
+    }, 'google.html');
+});
+
+Route::get('/file_show_s7', function () {
+    // Файл будет показан в браузере
+    return response()->file(base_path() . '/test_s7.txt');
+});

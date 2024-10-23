@@ -12,8 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
+            // routs, по которым не проверяем csrf
             '/get_employee_data_hw5', // <-- exclude this route
-            '/user_hw5/*'
+            '/user_hw5/*',
+            '/list_of_books_s7',
+            '/list_of_books_s7/*',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
