@@ -18,6 +18,7 @@ use App\Http\Controllers\SimpleController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestCookieController;
 use App\Http\Controllers\TestCsrfS6_2Controller;
+use App\Http\Controllers\TestDiS8Controller;
 use App\Http\Controllers\TestFormS6Controller;
 use App\Http\Controllers\TestHeaderController;
 use App\Http\Controllers\TestRedirectController;
@@ -243,3 +244,6 @@ Route::get('/user_hw7', [UserS7Controller::class, 'index'])->name('show_user_hw7
 Route::post('/user_hw7', [UserS7Controller::class, 'store'])->name('store_user_hw7');
 Route::get('/user_hw7/{id}', [UserS7Controller::class, 'get'])->name('show_user_by_id_hw7');
 Route::get('/resume_hw7/{id}', [PdfGeneratorHW7Controller::class, 'index'])->name('resume_hw7');
+
+// sem_8
+Route::get('/check_di_s8', [TestDiS8Controller::class, 'showUrl']);
