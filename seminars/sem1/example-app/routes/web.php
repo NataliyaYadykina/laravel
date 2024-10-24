@@ -25,6 +25,7 @@ use App\Http\Controllers\TestRedirectController;
 use App\Http\Controllers\TestValidationS6_4Controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserS7Controller;
+use App\Http\Middleware\DataLoggerHW8;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -247,3 +248,8 @@ Route::get('/resume_hw7/{id}', [PdfGeneratorHW7Controller::class, 'index'])->nam
 
 // sem_8
 Route::get('/check_di_s8', [TestDiS8Controller::class, 'showUrl']);
+
+// hw_8
+Route::get('/logs_hw8', function () {
+    return view('logs_hw8');
+})->middleware(DataLoggerHW8::class);
