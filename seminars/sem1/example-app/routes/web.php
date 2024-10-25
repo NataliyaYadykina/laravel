@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\NewsCreatedS9;
 use App\Http\Controllers\BookHw6Controller;
 use App\Http\Controllers\EmployeeHw5Controller;
 use App\Http\Controllers\EmployeeS6_2Controller;
@@ -27,6 +28,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserS7Controller;
 use App\Http\Middleware\DataLoggerHW8;
 use App\Models\Employee;
+use App\Models\News_s9;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -253,3 +255,17 @@ Route::get('/check_di_s8', [TestDiS8Controller::class, 'showUrl']);
 Route::get('/logs_hw8', function () {
     return view('logs_hw8');
 })->middleware(DataLoggerHW8::class);
+
+// sem 9
+Route::get('/news_created_s9', function () {
+    NewsCreatedS9::dispatch(News_s9::first());
+});
+
+Route::get('/news_update_test_s9', function () {
+    // News_s9::first()->update(['title' => 'New title for test']);
+    // return 'Updated';
+    // News_s9::withoutEvents(function () {
+    News_s9::first()->update(['title' => 'New 5 title for test']);
+    // });
+    return 'Updated';
+});
