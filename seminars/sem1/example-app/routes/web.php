@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\NewsCreatedS9;
+use App\Events\NewsHiddenHw9;
 use App\Http\Controllers\BookHw6Controller;
 use App\Http\Controllers\EmployeeHw5Controller;
 use App\Http\Controllers\EmployeeS6_2Controller;
@@ -29,6 +30,7 @@ use App\Http\Controllers\UserS7Controller;
 use App\Http\Middleware\DataLoggerHW8;
 use App\Models\Employee;
 use App\Models\News_s9;
+use App\Models\NewsHw9;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -268,4 +270,25 @@ Route::get('/news_update_test_s9', function () {
     News_s9::first()->update(['title' => 'New 5 title for test']);
     // });
     return 'Updated';
+});
+
+// hw_9
+Route::get('/create_test_hw9', function () {
+    $news = new NewsHw9();
+
+    $news->title = 'Test news 9';
+    $news->body = 'Test content for test news 9';
+
+    $news->save();
+    return 'News created';
+});
+
+Route::get('/news_hw9/{id}/hide', function ($id) {
+    $news = NewsHw9::findOrFail($id);
+    $news->hidden = true;
+    $news->save();
+
+    NewsHiddenHw9::dispatch($news);
+
+    return 'News hidden';
 });
