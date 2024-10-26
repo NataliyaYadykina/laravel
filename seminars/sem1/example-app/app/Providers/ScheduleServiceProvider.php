@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Jobs\ClearCacheHw10;
 use App\Jobs\SyncNewsS10;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Log;
@@ -38,6 +39,9 @@ class ScheduleServiceProvider extends ServiceProvider
 
         // Выполняем команду через терминал, в данном случае powershell в windows
         $schedule->exec('powershell -Command "New-Item -Path storage/logs/test_s10.log -ItemType File -Force"')->everyMinute();
+
+        // hw_10
+        $schedule->job(ClearCacheHw10::class)->hourly();
 
         // Пример задания, которое выполняется ежедневно
         // $schedule->command('your:command')->daily();
