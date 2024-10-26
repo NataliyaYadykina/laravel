@@ -28,11 +28,15 @@ use App\Http\Controllers\TestValidationS6_4Controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserS7Controller;
 use App\Http\Middleware\DataLoggerHW8;
+use App\Jobs\SyncNewsS10;
 use App\Models\Employee;
 use App\Models\News_s9;
 use App\Models\NewsHw9;
+use App\Models\User;
+use App\Notifications\UserEmailChangedS10Notification;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -291,4 +295,42 @@ Route::get('/news_hw9/{id}/hide', function ($id) {
     NewsHiddenHw9::dispatch($news);
 
     return 'News hidden';
+});
+
+// sem_10
+Route::get('/sync_news_s10', function () {
+    SyncNewsS10::dispatch(15);
+    return response(['status' => 'success']);
+});
+
+Route::get('/locale_s10', function () {
+    echo App::getLocale();
+});
+
+Route::get('/locale_s10/set/{locale}', function ($locale) {
+    App::setLocale($locale);
+    echo App::getLocale();
+    echo '<hr>';
+    echo __('messages.great');
+});
+
+Route::get('/locale/{locale}/thanks', function ($locale, Request $request) {
+    App::setLocale($locale);
+    echo __('messages.thanks', ['name' => $request->input('name')]);
+});
+
+Route::get('/user_s10/create_test/{amount}', function ($amount) {
+    return User::factory($amount)->create();
+});
+
+Route::get('/user_s10/{user}/change_email', function (User $user, Request $request) {
+    $oldEmail = $user->email;
+    $user->email = $request->input('email');
+    $user->save();
+    $user->notify(new UserEmailChangedS10Notification($oldEmail));
+    return response(['result' => 'email changed']);
+});
+
+Route::get('/user_s10/{user}/notifications', function (User $user) {
+    return $user->notifications;
 });
